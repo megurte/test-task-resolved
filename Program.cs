@@ -11,8 +11,8 @@ namespace Gridnine.FlightCodingTest
         {
             Rules rules = new Rules();
 
-            Console.WriteLine("Выберите правило для выборки полетов и введите соответствующее число: Основные правила\n1. Вылет до текущего момента времени\n2. Имеются сегменты с датой прилёта раньше даты вылета\n3. Общее время, проведённое на земле превышает два часа\n");
-            Console.WriteLine("\nДополнительные правила\n4. Сегментов за перелет больше n числа\n5. Ближайший перелет (Вылет)\n6. Вывести продолжительность перелетов\n7. Вывести все расписание перелетов и сегментов\n");
+            Console.WriteLine("Select a rule for the selection of flights and enter the appropriate number:\nMain rules\n1. Departure until the current time\n2. Segments with arrival date earlier than departure date\n3. The total time spent on the ground exceeds two hours\n");
+            Console.WriteLine("\nAdditional rules\n4. More than n segments per flight\n5. Nearest flight (Departure)\n6. Display flight duration\n7. Display all flight schedules and segments\n");
             int num = Convert.ToInt32(Console.ReadLine());
             rules.RulesApply(num);
 
@@ -21,7 +21,7 @@ namespace Gridnine.FlightCodingTest
 
         static void Pause()
         {
-            Console.Write("Нажмите любую клавишу для продолжения...");
+            Console.Write("Press any button to continue...");
             Console.ReadKey(true);
         }
     }
@@ -37,7 +37,7 @@ namespace Gridnine.FlightCodingTest
             switch (rule_num) 
             {
                 case 1:
-                    //вылет до текущего момента времени
+                    //departure until the current time
 
                     List<TimeSpan> summatorDate1 = new List<TimeSpan>();
                     foreach (Flight flight in flights)
@@ -51,11 +51,11 @@ namespace Gridnine.FlightCodingTest
                             summatorDate1.Add(timeSpan);
                     }
                     foreach (TimeSpan timeSpan1 in summatorDate1)
-                        Console.WriteLine("Общее время перелета: " + timeSpan1);
+                        Console.WriteLine("Total flight time: " + timeSpan1);
 
                     break;
                 case 2:
-                    //имеются сегменты с датой прилёта раньше даты вылета
+                    //segments with arrival date earlier than departure date
 
                     foreach (Flight flight in flights)
                     {
@@ -63,15 +63,14 @@ namespace Gridnine.FlightCodingTest
                         {
                             if (segment.ArrivalDate.CompareTo(segment.DepartureDate) < 0)
                             {
-                                Console.WriteLine("Сегмент: \n" + segment.DepartureDate + "\n" + segment.ArrivalDate);
+                                Console.WriteLine("Segment: \n" + segment.DepartureDate + "\n" + segment.ArrivalDate);
                             }
                         }
                     }
 
                     break;
                 case 3:
-                    //общее время, проведённое на земле превышает два часа 
-                    //(время на земле — это интервал между прилётом одного сегмента и вылетом следующего за ним)
+                    //the total time spent on the ground exceeds two hours
 
                     foreach (Flight flight in flights)
                     {
@@ -80,7 +79,7 @@ namespace Gridnine.FlightCodingTest
                             if ((flight.Segments[i + 1].DepartureDate.Hour - flight.Segments[i].ArrivalDate.Hour) < 2)
                             {
                                 Console.WriteLine(flight);
-                                Console.WriteLine("Сегмент: \n" + flight.Segments[i + 1].DepartureDate + "\n" + flight.Segments[i].ArrivalDate);
+                                Console.WriteLine("Segment: \n" + flight.Segments[i + 1].DepartureDate + "\n" + flight.Segments[i].ArrivalDate);
                             }
                         }
                     }
@@ -88,9 +87,9 @@ namespace Gridnine.FlightCodingTest
 
                         break;
                 case 4:
-                    //Сегментов за перелет больше n числа
+                    //more than "n" segments per flight
 
-                    Console.WriteLine("Введите количество перелетов: ");
+                    Console.WriteLine("Enter the number of segments: ");
                     int num_segments = Convert.ToInt32(Console.ReadLine());
 
                     for (int i = 0; i < flights.Count; i++)
@@ -100,8 +99,8 @@ namespace Gridnine.FlightCodingTest
                     }
 
                     break;
-                case 5:                    
-                    //Ближайший перелет (Вылет)
+                case 5:
+                    //Nearest flight (Departure)
 
                     DateTime temp;
                     for (int i = 0; i < flights.Count; i++)
@@ -119,10 +118,10 @@ namespace Gridnine.FlightCodingTest
                             }
                         }                     
                     }
-                    Console.WriteLine("Ближайший рейс отправляется: " + flights[0].Segments[0].DepartureDate);
+                    Console.WriteLine("Nearest flight departs: " + flights[0].Segments[0].DepartureDate);
                     break;
                 case 6:
-                    //Вывести продолжительность перелета
+                    //Display the duration of the flight
 
                     List<TimeSpan> summatorDate = new List<TimeSpan>();
                     foreach (Flight flight in flights)
@@ -136,11 +135,11 @@ namespace Gridnine.FlightCodingTest
                     }
 
                     foreach (TimeSpan timeSpan1 in summatorDate)
-                        Console.WriteLine("Общее время перелета: " + timeSpan1);
+                        Console.WriteLine("Total flight time: " + timeSpan1);
         
                     break;
-                case 7:                 
-                    //Вывести все расписание перелетов
+                case 7:
+                    //Display the entire flight schedule
 
                     for (int i = 0; i < flights.Count; i++)
                     {
@@ -148,7 +147,7 @@ namespace Gridnine.FlightCodingTest
                         {
                             foreach (Segment segment in flights[i].Segments)
                             {
-                                Console.WriteLine(i + 1 + " рейс:");
+                                Console.WriteLine(i + 1 + " flight:");
                                 Console.WriteLine(segment.DepartureDate + "\n" + segment.ArrivalDate);
                             }
                         }
