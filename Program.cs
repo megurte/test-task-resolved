@@ -109,7 +109,7 @@ namespace Gridnine.FlightCodingTest
                         {
                             if (flights[i].Segments[0].DepartureDate > flights[j].Segments[0].DepartureDate)
                             {
-                                if (DateTime.Now < flights[i].Segments[0].DepartureDate)
+                                if (DateTime.Now > flights[i].Segments[0].DepartureDate)
                                 {
                                     temp = flights[i].Segments[0].DepartureDate;
                                     flights[i].Segments[0].DepartureDate = flights[j].Segments[0].DepartureDate;
